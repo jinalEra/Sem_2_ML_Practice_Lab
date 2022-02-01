@@ -1,0 +1,170 @@
+import pandas as pd
+import numpy as np
+data = pd.read_csv("mtcars.csv")
+data
+
+data['new_col'] = pd.Series([11,22,33,44,55,66,77,88,99,111], index=[0,1,2,3,4,5,6,7,8,9])
+data
+
+data.empty
+
+#broadcasting - a new column name mpg_cyl where sum of mpg and cyl columns
+data['mpg_cyl'] = data['mpg'] + data['cyl']
+data
+
+data.shape
+(32, 14)
+
+
+data.columns
+Index(['model', 'mpg', 'cyl', 'disp', 'hp', 'drat', 'wt', 'qsec', 'vs', 'am',
+       'gear', 'carb', 'new_col', 'mpg_cyl'],
+      dtype='object')
+
+data.iloc[1]
+model      Mazda RX4 Wag
+mpg                   21
+cyl                    6
+disp                 160
+hp                   110
+drat                 3.9
+wt                 2.875
+qsec               17.02
+vs                     0
+am                     1
+gear                   4
+carb                   4
+new_col               22
+mpg_cyl               27
+Name: 1, dtype: object      
+
+#add new 3 row: first create dataframe and merge it
+df2 = {   'model': ['model32', 'model33','model34'],
+            'mpg': [33, 12,43],
+          'cyl': [2,3,4], 'disp': [123,134,145], 'hp': [234,345,567], 
+         'drat': [2.5, 4.5, 5.6], 'wt': [4.5,6.7,7.8],
+          'qsec': [23, 45,34],
+          'vs': [0,1,0],
+          'am': [1,1,1],
+          'gear': [4,5,4],
+          'carb': [4,4,4],
+          'new': [33,44,55]
+        }
+data2 = pd.DataFrame(df2, index=[32,33,34])
+frames = [data, data2]
+maindata = pd.concat(frames)
+maindata
+
+#memory usage
+maindata.memory_usage()
+Index      280
+model      140
+mpg        280
+cyl        280
+disp       280
+hp         280
+drat       280
+wt         280
+qsec       280
+vs         280
+am         280
+gear       280
+carb       280
+new_col    280
+mpg_cyl    280
+new        280
+dtype: int64
+
+#smallest - number of column and col_name
+data.nsmallest(10, 'mpg')
+
+#sort_val - by default ascending=True
+data.sort_values('hp')
+
+data.sort_values('hp', ascending=False)
+
+#data between range
+data.query('110<hp<180')[:]
+
+tbl1 = {'city': ['A', 'B', 'C', 'D'], 'temperature': [22, 25,24,27]}
+daf1 = pd.DataFrame(tbl1)
+daf1
+
+
+city	temperature
+0	A	22
+1	B	25
+2	C	24
+3	D	27
+
+tbl2 = {'city': ['A', 'B', 'C', 'D'], 'humadity': [56, 65,47,72]}
+daf2 = pd.DataFrame(tbl2)
+daf2
+city	humadity
+0	A	56
+1	B	65
+2	C	47
+3	D	72
+# now merge
+daf_main = pd.merge(daf1, daf2, on='city')
+daf_main
+city	temperature	humadity
+0	A	22	56
+1	B	25	65
+2	C	24	47
+3	D	27	72
+
+daf_main = pd.merge(daf1, daf2, on='city', how='left')
+daf_main
+
+	city	temperature	humadity
+0	A	22	56
+1	B	25	65
+2	C	24	47
+3	D	27	72
+
+
+data.isnull()  #where value is Nan there assign True value
+
+	model	    mpg	    cyl	   disp	    hp	   drat	    wt	  qsec	   vs	    am	    gear	carb	new_col	mpg_cyl
+0	False	False	False	False	False	False	False	False	False	False 	False	False	False	False
+1	False	False	False	False	False	False	False	False	False	False	False	False	False	False
+2	False	False	False	False	False	False	False	False	False	False	False	False	False	False
+3	False	False	False	False	False	False	False	False	False	False	False	False	False	False
+4	False	False	False	False	False	False	False	False	False	False	False	False	False	False
+
+#create new xlsx file
+mtcars_2 = pd.ExcelWriter('new_mtcars.xlsx')
+#daf_main dataframe copy in new_mtcars.xlsx
+data.to_excel(mtcars_2)
+#save it
+mtcars_2.save()
+
+
+#melt 
+mt = pd.DataFrame({'A': {0: 'a', 1:'b',2:'c',3:'d'}, 'B':{0:1,1:2,2:3,3:4}, 'C': {0:6,1:7,2:8,3:9}})
+mt
+A	B	C
+0	a	1	6
+1	b	2	7
+2	c	3	8
+3	d	4	9
+
+pd.melt(mt, id_vars= ['A'], value_vars= ['B'])
+
+	A	variable	value
+0	a	B	1
+1	b	B	2
+2	c	B	3
+3	d	B	4
+
+pd.melt(mt, id_vars= ['A'], value_vars= ['B','C'])
+	A	variable	value
+0	a	B	1
+1	b	B	2
+2	c	B	3
+3	d	B	4
+4	a	C	6
+5	b	C	7
+6	c	C	8
+7	d	C	9
