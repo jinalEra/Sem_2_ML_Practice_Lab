@@ -1,0 +1,145 @@
+pandas:
+
+series: 1D
+Dataframe: 2d
+panel : multi-d 3D multiple dataframe
+------------------------------------------
+Numpy: NumericPython
+1. for creating array
+
+
+a = np.array([1,2,3,4])
+type(a)
+
+a.ndim
+aa = np.array([[[1,2,3], [4,5,6], [7,8,9]]])
+aa
+
+l_tup = np.array([(1,2,3), (3,4,5)])
+l_tup
+
+l_tup.shape
+
+l_tup.size
+6
+ 
+l_tup.dtype
+dtype('int32')
+
+n = np.array(((1,2,3),(2,3,4)))
+n
+array([[1, 2, 3],
+       [2, 3, 4]])
+
+n.itemsize
+8
+
+n = np.zeros((2,3))
+n
+array([[0., 0., 0.],
+       [0., 0., 0.]])
+
+n = np.ones((2,3))
+n
+
+n = np.ones((3,3))
+n
+array([[1., 1., 1.],
+       [1., 1., 1.],
+       [1., 1., 1.]])
+
+j = np.empty((1,1))
+j
+
+array([[1.76127852e-312]])
+
+f = np.arange(0, 30, 5)
+f
+
+f = np.arange(1, 101, 2)
+f
+
+f = np.arange(2, 101, 2)
+f
+
+
+r = np.random.random((3,3))
+r
+array([[0.31408575, 0.87415659, 0.57573986],
+       [0.08424326, 0.80389323, 0.03135427],
+       [0.50271853, 0.96732061, 0.35680791]])
+r = np.random.random((2,3))
+r
+array([[0.01278367, 0.51673722, 0.06031615],
+       [0.61195609, 0.27935705, 0.48121793]])
+
+arr = np.array([[1, 2, 3, 4],
+                [5, 2, 4, 2],
+                [1, 2, 0, 1]])
+  
+newarr = arr.reshape(2, 2, 3)
+
+aa = np.array([[1,2,3], [4,5,6]])
+aa
+array([[1, 2, 3],
+       [4, 5, 6]])
+aa.reshape(6)
+array([1, 2, 3, 4, 5, 6])
+p = np.array([[1,2,3], [4,5,6]])
+p
+p = np.array([[1,2,3], [4,5,6]])
+p
+array([[1, 2, 3],
+       [4, 5, 6]])
+q = np.array([[11,22,33], [44,55,66]])
+q
+array([[11, 22, 33],
+       [44, 55, 66]])
+p
+p
+array([[1, 2, 3],
+       [4, 5, 6]])
+q
+q
+
+stack for add two matrics
+
+array([[11, 22, 33],
+       [44, 55, 66]])
+pq = np.hstack((p,q))
+pq
+pq = np.hstack((p,q))
+pq
+array([[ 1,  2,  3, 11, 22, 33],
+       [ 4,  5,  6, 44, 55, 66]])
+pq = np.vstack((p,q))
+pq
+array([[ 1,  2,  3],
+       [ 4,  5,  6],
+       [11, 22, 33],
+       [44, 55, 66]])
+
+slice the metrics
+
+pqs = np.vsplit(pq,2)
+pqs = np.vsplit(pq, 2)
+pqs = np.hsplit(pq, 6)
+pqs = np.hsplit(pq, (3,4))
+pqs
+l = np.full((2,3), 11)
+l
+
+assignment. : 
+task-1
+random.mt 3,3
+hstack
+vstack
+hasplit
+vsplit
+
+ndim
+itemsize
+size
+shape
+
+
